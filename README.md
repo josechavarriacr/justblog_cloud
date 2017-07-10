@@ -3,6 +3,13 @@ JustBlog
 
 Simple platform for blogging based in Yii2
 
+# Try Live
+
+home -> http://justblog.site
+
+admin -> http://justblog.site/admin
+
+
 REQUIREMENTS
 ------------
 
