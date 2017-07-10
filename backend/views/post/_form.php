@@ -24,6 +24,7 @@ use kartik\switchinput\SwitchInput;
             <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'descripcion')->textArea(['maxlength' => 500,'rows' => '4']) ?>
             <?= $form->field($model, 'keyword')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'repo')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'categories')->widget(Select2::classname(), [
              'data' => $data = ArrayHelper::map(Category::find()->all(),'id','name'),
              'options' => ['value'=> $model->categories,  'placeholder' => 'Select categories...', 'multiple' => true],
@@ -48,8 +49,10 @@ use kartik\switchinput\SwitchInput;
                 ]); ?>  
 
                 <?php if ($model->img): ?>
-                    <div class="img-preview">
-                        <?= Html::img($model->img, ['width'=>'50','height'=>'50']) ?>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <?= Html::img($model->img, ['width'=>'50','height'=>'50']) ?>
+                        </div>
                     </div>
                 <?php endif; ?>
                 <?= $form->field($model, 'file')->fileInput()?>
