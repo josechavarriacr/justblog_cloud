@@ -39,7 +39,7 @@ AppAsset::register($this);
 		if (Yii::$app->user->isGuest) {
             // $menuItems[] = ['label' => '<span class="glyphicon glyphicon-log-in"></span> Login', 'url' => ['/site/login']];
 		} else {
-			$menuItems[] = ['label' => '<span class="glyphicon glyphicon-user"></span> Signup', 'url' => ['/site/signup']];
+			// $menuItems[] = ['label' => '<span class="glyphicon glyphicon-user"></span> Signup', 'url' => ['/site/signup']];
 			$menuItems[] = '<li>'
 			. Html::beginForm(['/site/logout'], 'post')
 			. Html::submitButton(

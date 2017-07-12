@@ -135,7 +135,7 @@ class PostController extends Controller
 
   public function actionDelete($id)
   {
-    if(\Yii::$app->user->can('createPost')){
+    if(\Yii::$app->user->can('deletePost')){
      $this->findModel($id)->delete();
 
      return $this->redirect(['index']);

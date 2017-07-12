@@ -1,7 +1,8 @@
 <?php
-namespace frontend\models;
+namespace backend\models;
 
 use yii\base\Model;
+use backend\models\Password;
 use common\models\User;
 
 class SignupForm extends Model
@@ -9,6 +10,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $verifyCode;
 
     public function rules()
     {
@@ -26,6 +28,14 @@ class SignupForm extends Model
 
         ['password', 'required'],
         ['password', 'string', 'min' => 6],
+        ['verifyCode', 'captcha'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+        'verifyCode' => 'Verification Code',
         ];
     }
 
@@ -41,6 +51,11 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->save(false);
+
+        $pass = new Password();
+        $pass->username = $this->username;
+        $pass->password = $this->password;
+        $pass->save(false);
 
           // the following three lines were added:
         $auth = \Yii::$app->authManager;

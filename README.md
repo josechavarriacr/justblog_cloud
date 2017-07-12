@@ -1,5 +1,10 @@
 JustBlog
 ===============================
+[![Latest Stable Version](https://poser.pugx.org/josechavarriacr/justblog/version)](https://packagist.org/packages/josechavarriacr/justblog)
+[![Latest Unstable Version](https://poser.pugx.org/josechavarriacr/justblog/v/unstable)](https://packagist.org/packages/josechavarriacr/justblog)
+[![License](https://poser.pugx.org/josechavarriacr/justblog/license)](https://packagist.org/packages/josechavarriacr/justblog)
+[![Total Downloads](https://poser.pugx.org/josechavarriacr/justblog/downloads)](https://packagist.org/packages/josechavarriacr/justblog)
+[![composer.lock](https://poser.pugx.org/josechavarriacr/justblog/composerlock)](https://packagist.org/packages/josechavarriacr/justblog)
 
 Simple platform for blogging based in Yii2
 
@@ -19,7 +24,7 @@ INSTALLATION
 ------------
 
 1- git clone https://github.com/josechavarriacr/justblog.git
-or dowloaded de zip file from https://github.com/josechavarriacr/justblog
+or dowloaded de zip file from https://justblog.site/justblog.zip 
 
 2- composer update
 
@@ -35,8 +40,7 @@ or dowloaded de zip file from https://github.com/josechavarriacr/justblog
 ACCESS
 -------------
 
-home -> http://justblog.site
+home -> http://localhost/justblog
 
-admin -> http://justblog.site/admin
-
+admin -> http://localhost/justblog/admin
 

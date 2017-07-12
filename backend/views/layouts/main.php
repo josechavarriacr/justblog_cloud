@@ -35,12 +35,17 @@ $user = Yii::$app->user->id;
             'class' => 'navbar-inverse navbar-fixed-top',
             ],
             ]);
-        $menuItems = [
+       
+        if (Yii::$app->user->isGuest) {
+            // $menuItems[] = ['label' => '<span class="fa fa-sign-in"></span> Login', 'url' => ['/site/login']];
+            $menuItems[] = ['label' => '<span class="fa fa-user-plus"></span> Sign Up', 'url' => ['/site/signup']];
+        } else {
+             $menuItems = [
         ['label' => '<span class="fa fa-id-card-o"></span> Info',
             'items' => [
-                 ['label' => ' <span class="fa fa-user"></span> Profile', 'url' => ['/profile/view/'.$user]],
+                 ['label' => ' <span class="fa fa-user"></span> Profile', 'url' => ['/profile/index/']],
                  '<li class="divider"></li>',
-                 ['label' => '<span class="fa fa-flag"></span> MetaTags', 'url' => ['/metatag/view/'.$user]],
+                 ['label' => '<span class="fa fa-flag"></span> MetaTags', 'url' => ['/metatag/index/']],
                  '<li class="divider"></li>',
                  ['label' => '<span class="fa fa-pencil-square-o "></span> About', 'url' => ['/about/index']],
             ],
@@ -65,9 +70,6 @@ $user = Yii::$app->user->id;
         ],
 
         ];
-        if (Yii::$app->user->isGuest) {
-            $menuItems[] = ['label' => '<span class="fa fa-sign-in"></span> Login', 'url' => ['/site/login']];
-        } else {
             $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

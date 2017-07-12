@@ -6,6 +6,10 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use backend\models\SignupForm;
+use backend\models\Profile;
+use backend\models\Metatag;
+use backend\models\Password;
 use frontend\components\Analytics;
 
 class SiteController extends Controller
@@ -18,7 +22,7 @@ class SiteController extends Controller
         'class' => AccessControl::className(),
         'rules' => [
         [
-        'actions' => ['login', 'error'],//actions without loggin
+        'actions' => ['login', 'error','signup','captcha'],//actions without loggin
         'allow' => true,
         ],
         [
@@ -42,7 +46,11 @@ class SiteController extends Controller
         return [
         'error' => [
         'class' => 'yii\web\ErrorAction',
-        ],
+            ],
+        'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
         ];
     }
 
@@ -51,6 +59,22 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionSignup()
+    {
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+            ]);
+    }
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {

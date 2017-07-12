@@ -66,17 +66,9 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-    	$models = Post::find()->orderBy(['created_at'=>SORT_DESC])->limit(5)->all();
-    	// $countQuery = clone $query;
-    	// $pages = new Pagination(['totalCount' => $countQuery->count()]);
-
-    	// $models = $query->offset($pages->offset)
-    	// ->limit($pages->limit)
-    	// ->all();
-
+    	$model = Post::find()->orderBy(['created_at'=>SORT_DESC])->limit(5)->all();
     	return $this->render('index',[
-    		'models' => $models,
-    		// 'pages' => $pages,
+    		'model' => $model,
             ]);
     }
 
@@ -111,7 +103,7 @@ class SiteController extends Controller
     			]
     			]);
     	}
-    	return $this->render('index');
+    	return $this->redirect(['index']);
     }
 
     public function actionAdmin()
@@ -265,7 +257,8 @@ class SiteController extends Controller
     			$meta->save(false);
 
     			if (Yii::$app->getUser()->login($user)) {
-    				return $this->goHome();
+                    // return $this->goHome();
+    				return $this->redirect(['/admin']);
     			}
     		}
     	}

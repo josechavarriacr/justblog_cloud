@@ -12,7 +12,7 @@ use yii\widgets\LinkPager;
 <h1 class="heading">Lasted Post by Users</h1>
 	<div class="row">
 		<div class="col-lg-9 col-lg-offset-3">
-			<?php foreach ($models as $post): ?> 
+			<?php foreach ($model as $post): ?> 
 				<div class="blog">
 					<h3 class="heading">
 						<?= Html::a($post['title'], [$post['url']], ['class' => 'profile-link']) ?>

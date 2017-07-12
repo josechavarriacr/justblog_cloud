@@ -18,7 +18,7 @@ Yii::$app->site->getMetaTags();
 
 	<div class="body-content">
 		<div class="col-md-9"><!-- col-md-9 start -->
-		<hr>
+			<hr>
 			<div class="blog row">
 				<div class="col-lg-9 col-lg-offset-3">
 					<h2 class="heading">Accees</h2>
@@ -30,9 +30,9 @@ Yii::$app->site->getMetaTags();
 
 		<!-- start _posts -->
 		<?php echo $this->render('_posts', [
-			'models' => $models,
-				// 'pages' => $pages,
+			'model' => $model,
 			]); ?>
 			<!-- end _posts -->
 
 		</div>
+	</div>
