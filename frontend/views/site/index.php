@@ -17,19 +17,22 @@ Yii::$app->site->getMetaTags();
 	</div>
 
 	<div class="body-content">
-
-		<div class="row blog">
-			
-			<div class="col-lg-4 col-lg-offset-4">
-				<h2 class="heading">Accees</h2>
-				
-				<p>The defalut site for visitor o readers</p><p><a href="" style="font-size: 16px" class="badge progress-bar-info">Frontend</a></p>
-
-				<p>This part contains all the logic and processes of a platform Blogging/CMS</p><p><a href="" style="font-size: 16px" class="badge progress-bar-warning">Backend</a></p>
-
+		<div class="col-md-9"><!-- col-md-9 start -->
+		<hr>
+			<div class="blog row">
+				<div class="col-lg-9 col-lg-offset-3">
+					<h2 class="heading">Accees</h2>
+					<p>The defalut site for visitor o readers</p><p><a href="" style="font-size: 16px" class="badge progress-bar-info">Frontend</a></p>
+					<p>This part contains all the logic and processes of a platform Blogging/CMS</p><p><a href="admin" style="font-size: 16px" class="badge progress-bar-warning">Backend</a></p>
+				</div> 
 			</div>
+		</div>
 
-		</div> 
+		<!-- start _posts -->
+		<?php echo $this->render('_posts', [
+			'models' => $models,
+				// 'pages' => $pages,
+			]); ?>
+			<!-- end _posts -->
 
-	</div>
-</div>
+		</div>

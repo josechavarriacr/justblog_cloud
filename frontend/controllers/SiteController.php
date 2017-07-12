@@ -66,17 +66,18 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-    	$query = Post::find()->orderBy(['created_at'=>SORT_DESC]);
-    	$countQuery = clone $query;
-    	$pages = new Pagination(['totalCount' => $countQuery->count()]);
+    	$models = Post::find()->orderBy(['created_at'=>SORT_DESC])->limit(5)->all();
+    	// $countQuery = clone $query;
+    	// $pages = new Pagination(['totalCount' => $countQuery->count()]);
 
-    	$models = $query->offset($pages->offset)
-    	->limit($pages->limit)
-    	->all();
+    	// $models = $query->offset($pages->offset)
+    	// ->limit($pages->limit)
+    	// ->all();
 
     	return $this->render('index',[
     		'models' => $models,
-    		'pages' => $pages,]);
+    		// 'pages' => $pages,
+            ]);
     }
 
     protected function findModel($id)
