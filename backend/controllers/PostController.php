@@ -135,18 +135,23 @@ class PostController extends Controller
 
   public function actionDelete($id)
   {
-   $this->findModel($id)->delete();
+    if(\Yii::$app->user->can('createPost')){
+     $this->findModel($id)->delete();
 
-   return $this->redirect(['index']);
- }
-
- protected function findModel($id)
- {
-   if (($model = Post::findOne($id)) !== null) {
-    return $model;
-  } else {
-    throw new NotFoundHttpException('The requested page does not exist.');
+     return $this->redirect(['index']);
+   }else{
+    Yii::$app->session->setFlash('error','User not allowed');
+    return $this->redirect(['index']);
   }
+}
+
+protected function findModel($id)
+{
+ if (($model = Post::findOne($id)) !== null) {
+  return $model;
+} else {
+  throw new NotFoundHttpException('The requested page does not exist.');
+}
 }
 
 public function actionUrl($url)

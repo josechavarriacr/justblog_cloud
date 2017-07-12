@@ -68,33 +68,44 @@ class ProfileController extends Controller
 
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) ) {
+        if (\Yii::$app->user->can('updatePost')) {
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) ) {
 
-            $model->file = UploadedFile::getInstance($model, 'file');
-            $img = $model->id.'a'.time();
-            if(!empty($model->file)){
-                $path = Yii::getAlias('@web/uploads/profile/');
-                FileHelper::createDirectory('uploads/profile');
-                $model->file->saveAs('uploads/profile/'.$img.'.'.$model->file->extension);
-                $model->image = $path.$img.'.'.$model->file->extension;
+                $model->file = UploadedFile::getInstance($model, 'file');
+                $img = $model->id.'a'.time();
+                if(!empty($model->file)){
+                    $path = Yii::getAlias('@web/uploads/profile/');
+                    FileHelper::createDirectory('uploads/profile');
+                    $model->file->saveAs('uploads/profile/'.$img.'.'.$model->file->extension);
+                    $model->image = $path.$img.'.'.$model->file->extension;
+                }
+
+                $model->save(false);
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                    ]);
             }
-
-            $model->save(false);
-            return $this->redirect(['view', 'id' => $model->id]);
+            
         } else {
-            return $this->render('update', [
-                'model' => $model,
-                ]);
-        }
-    }
+           Yii::$app->session->setFlash('error','User not allowed');
+           return $this->redirect(['index']);
+       }
+   }
 
-    protected function findModel($id)
-    {
-        if (($model = Profile::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+   public function actionDelete($id){
+       Yii::$app->session->setFlash('error','User not allowed');
+       return $this->redirect(['index']);
+   }
+
+   protected function findModel($id)
+   {
+    if (($model = Profile::findOne($id)) !== null) {
+        return $model;
+    } else {
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
+}
 }

@@ -206,10 +206,10 @@ class SiteController extends Controller
     		]);
     }
 
-    public function actionAma(){
-    	$model = $this->findAbout('ama');
+    public function actionFeedback(){
+    	$model = $this->findAbout('feedback');
 
-    	return $this->render('ama',[
+    	return $this->render('feedback',[
     		'model' => $model,
     		]);
     }

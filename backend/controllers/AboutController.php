@@ -55,7 +55,7 @@ class AboutController extends Controller
     	$model = Post::find()
     	->where(['type'=>'about'])
     	->orWhere(['type'=>'privacy'])
-    	->orWhere(['type'=>'ama'])->all();
+    	->orWhere(['type'=>'feedback'])->all();
 
     	return $this->render('index', [
     		'model' => $model,
@@ -72,64 +72,80 @@ class AboutController extends Controller
 
     public function actionCreate()
     {
-    	$model = new Post();
+        if (\Yii::$app->user->can('createPost')) {
+          $model = new Post();
 
-    	if ($model->load(Yii::$app->request->post()) ) {
-    		$imageName = time();
-    		$model->file = UploadedFile::getInstance($model, 'file');
-    		$path = Yii::getAlias('@web/uploads/meta/');
-    		if(!empty($model->file)){
-    			$model->file->saveAS('uploads/meta/'.$imageName.'.'.$model->file->extension);
-    			$model->img = $path.$imageName.'.'.$model->file->extension;
-    		}
-    		$model->created_at = time();
-    		$model->save(false);
-    		return $this->redirect(['view', 'id' => $model->id]);
-    	} else {
-    		return $this->render('create', [
-    			'model' => $model,
-    			]);
-    	}
+          if ($model->load(Yii::$app->request->post()) ) {
+            $imageName = time();
+            $model->file = UploadedFile::getInstance($model, 'file');
+            $path = Yii::getAlias('@web/uploads/meta/');
+            if(!empty($model->file)){
+                $model->file->saveAS('uploads/meta/'.$imageName.'.'.$model->file->extension);
+                $model->img = $path.$imageName.'.'.$model->file->extension;
+            }
+            $model->created_at = time();
+            $model->save(false);
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                ]);
+        }
+    } else {
+        Yii::$app->session->setFlash('error','User not allowed');
+        return $this->redirect(['index']);
     }
+}
 
-    public function actionUpdate($id)
-    {
-    	$model = $this->findModel($id);
-    	$model->tags = Post::getTags($id);
-    	$model->categories = Post::getCategories($id);
+public function actionUpdate($id)
+{
+    if (\Yii::$app->user->can('updatePost')) {
+       $model = $this->findModel($id);
+       $model->tags = Post::getTags($id);
+       $model->categories = Post::getCategories($id);
 
-    	if ($model->load(Yii::$app->request->post()) ) {
-    		$imageName = time();
-    		$model->file = UploadedFile::getInstance($model, 'file');
-    		$path = Yii::getAlias('@web/uploads/meta/');
-    		if(!empty($model->file)){
-    			$model->file->saveAS('uploads/meta/'.$imageName.'.'.$model->file->extension);
-    			$model->img = $path.$imageName.'.'.$model->file->extension;
-    		}
-    		
-    		$model->save(false);
-    		return $this->redirect(['view', 'id' => $model->id]);
+       if ($model->load(Yii::$app->request->post()) ) {
+          $imageName = time();
+          $model->file = UploadedFile::getInstance($model, 'file');
+          $path = Yii::getAlias('@web/uploads/meta/');
+          if(!empty($model->file)){
+             $model->file->saveAS('uploads/meta/'.$imageName.'.'.$model->file->extension);
+             $model->img = $path.$imageName.'.'.$model->file->extension;
+         }
 
-    	} else {
-    		return $this->render('update', [
-    			'model' => $model,
-    			]);
-    	}
-    }
+         $model->save(false);
+         return $this->redirect(['view', 'id' => $model->id]);
 
-    public function actionDelete($id)
-    {
-    	$this->findModel($id)->delete();
+     } else {
+      return $this->render('update', [
+         'model' => $model,
+         ]);
+  }
+} else {
+    Yii::$app->session->setFlash('error','Usuar not allowed');
+    return $this->redirect(['index']);
+}
+}
 
-    	return $this->redirect(['index']);
-    }
+public function actionDelete($id)
+{
+    if (\Yii::$app->user->can('deletePost')) {
+       $this->findModel($id)->delete();
+       return $this->redirect(['index']);
+   } else {
+    Yii::$app->session->setFlash('error', 'User not allowed');
+    return $this->redirect(['index']);
+}
 
-    protected function findModel($id)
-    {
-    	if (($model = Post::findOne($id)) !== null) {
-    		return $model;
-    	} else {
-    		throw new NotFoundHttpException('The requested page does not exist.');
-    	}
-    }
+
+}
+
+protected function findModel($id)
+{
+   if (($model = Post::findOne($id)) !== null) {
+      return $model;
+  } else {
+      throw new NotFoundHttpException('The requested page does not exist.');
+  }
+}
 }

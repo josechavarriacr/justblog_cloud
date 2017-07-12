@@ -55,47 +55,64 @@ class TagController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+            ]);
     }
 
     public function actionView($id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
-        ]);
+            ]);
     }
 
     public function actionCreate()
     {
-        $model = new Tag();
+        if (\Yii::$app->user->can('createPost')) {
+            $model = new Tag();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            Yii::$app->session->setFlash('error', 'User not allowed');
+            return $this->redirect(['index']);
         }
+        
     }
 
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('updatePost')) {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                    ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            Yii::$app->session->setFlash('error', 'User not allowed');
+            return $this->redirect(['index']);
         }
+        
     }
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(\Yii::$app->user->can('updatePost')){
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else{
+            Yii::$app->session->setFlash('error', 'User not allowed');
+            return $this->redirect(['index']);
+        }
     }
 
     protected function findModel($id)
