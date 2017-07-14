@@ -25,7 +25,7 @@ AppAsset::register($this);
 	<div class="wrap">
 		<?php
 		NavBar::begin([
-			'brandLabel' => '<img src="/backend/web/uploads/profile/ico.ico" class="ico" >',
+			'brandLabel' => '<span class="glyphicon glyphicon-home"></span>',
 			'brandUrl' => Yii::$app->homeUrl,
 			'options' => [
 			'class' => 'navbar-custom navbar-fixed-top',
