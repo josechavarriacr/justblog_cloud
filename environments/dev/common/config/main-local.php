@@ -1,5 +1,6 @@
 <?php
 return [
+    'bootstrap' => ['Analytics'],
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
@@ -10,6 +11,9 @@ return [
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
+        ],
+          'Analytics' => [
+            'class' => 'frontend\components\Analytics',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',

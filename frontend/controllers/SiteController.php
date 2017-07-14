@@ -257,8 +257,8 @@ class SiteController extends Controller
     			$meta->save(false);
 
     			if (Yii::$app->getUser()->login($user)) {
-                    // return $this->goHome();
-    				return $this->redirect(['/admin']);
+                    return $this->goHome();
+    				// return $this->redirect(['/admin']);
     			}
     		}
     	}
