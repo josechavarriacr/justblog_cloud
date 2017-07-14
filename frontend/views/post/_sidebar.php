@@ -36,7 +36,7 @@ use frontend\models\Post;
 					<button class="btn btn-default btn-sm btn-block" data-toggle="collapse" data-target="#categories">More <span class="caret"></span></button>
 					<hr class="">
 
-					<h4 class="heading">Hecho en Costa Rica</h4>
+					<h4 class="heading">Made in Costa Rica</h4>
 					<div class="bandera costarica" title="Costa Rica"></div>
 					<hr class="">
 
